@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>4_函数式组件使用props</title>
+    <script src="../16.4.react.development.js"></script>
+    <script src="../16.4.react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test1"></div>
+		<div id="test2"></div>
+		<div id="test3"></div>
+      <!-- 此处一定要写babel -->
+    <script type="text/babel"> 
+			// 1.创建组件
+			// class Person extends React.Component{
+
+			// 	// 对标签属性进行类型，必要性的限制
+			// 	static propTypes = {
+			// 		name: PropTypes.string.isRequired,  //名字必须为字符串，必填
+			// 		sex:	PropTypes.string,  //性别必须为字符串
+			// 		age:	PropTypes.number, //限制年龄必须为数字
+			// 	}
+			// 	// 指定默认标签属性值
+			// 	static defaultProps = {
+			// 		sex: '不男不女',  //设置sex默认值
+			// 		age: 18	//设置age默认值
+			// 	}
+
+			// 	state = {}
+
+			// 	render() {
+			// 		const{name,age,sex} = this.props
+			// 		//props是只读
+			// 		//this.props.name = 'jack'   //此行代码会报错，因为props是只读的
+			// 		return(
+			// 			<ul>
+			// 				<li>姓名：{name}</li>
+			// 				<li>性别：{sex}</li>
+			// 				<li>年龄：{age+1}</li>
+			// 			</ul>						
+			// 		)
+			// 	}
+			// }
+
+			function Person(props) {
+				console.log(props)
+				const {name,age,sex} = props
+				return (
+					<ul>
+						<li>姓名：{name}</li>
+						<li>性别：{sex}</li>
+						<li>年龄：{age}</li>
+					</ul>
+				)
+			}
+
+			Person.propTypes = {
+				name: PropTypes.string.isRequired,  //名字必须为字符串，必填
+				sex:	PropTypes.string,  //性别必须为字符串
+				age:	PropTypes.number, //限制年龄必须为数字
+			}
+			// 指定默认标签属性值
+			Person.defaultProps = {
+				sex: '不男不女',  //设置sex默认值
+				age: 18	//设置age默认值
+			}
+
+			// 2. 渲染组件到页面
+			ReactDOM.render(<Person name="jerry"  sex="女"  age={18}/>,	document.getElementById('test1'))
+
+		</script>
+		<script>
+			var aa = {a:1,b:2}
+			var {a} = aa
+			var {b} = aa
+			console.log({b})
+		</script>
+  </body>
+</html>

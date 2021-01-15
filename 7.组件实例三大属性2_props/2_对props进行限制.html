@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>2_对props进行限制</title>
+    <script src="../16.4.react.development.js"></script>
+    <script src="../16.4.react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test1"></div>
+		<div id="test2"></div>
+		<div id="test3"></div>
+      <!-- 此处一定要写babel -->
+    <script type="text/babel"> 
+			// 1.创建组件
+			class Person extends React.Component{
+				render() {
+					console.log(this)
+					// 写法1
+					// return (
+					// 	<ul>
+					// 		<li>姓名：{this.props.name}</li>
+					// 		<li>性别：{this.props.sex}</li>
+					// 		<li>年龄：{this.props.age}</li>
+					// 	</ul>
+					// )
+
+					// 写法2
+					const{name,age,sex} = this.props
+
+					//props是只读
+					//this.props.name = 'jack'   //此行代码会报错，因为props是只读的
+
+					return(
+						<ul>
+							<li>姓名：{name}</li>
+							<li>性别：{sex}</li>
+							<li>年龄：{age+1}</li>
+						</ul>						
+					)
+				}
+			}
+
+			// 对标签属性进行类型，必要性的限制
+
+			// 注意： propTypes 跟 PropTypes的大小写不一样
+			Person.propTypes = {
+				name: PropTypes.string.isRequired,  //名字必须为字符串，必填
+				sex:	PropTypes.string,  //性别必须为字符串
+				age:	PropTypes.number, //限制年龄必须为数字
+				speak: PropTypes.func, //限制speak必须为函数
+			}
+			// 指定默认标签属性值
+			Person.defaultProps = {
+				sex: '不男不女',  //设置sex默认值
+				age: 18	//设置age默认值
+			}
+
+			// 2. 渲染组件到页面
+			ReactDOM.render(<Person name="jerry"  sex="男" speak={speak} />,	document.getElementById('test1'))
+			ReactDOM.render(<Person name="tom" age={18} />,	document.getElementById('test2'))
+			
+			const p = {name:'老刘',age:18,sex:'女'}  //批量传递标签属性
+			//ReactDOM.render(<Person name="老刘" age="30" sex="女"/>,	document.getElementById('test3'))
+			ReactDOM.render(<Person {...p}/>,document.getElementById('test3'))
+
+			function speak() {
+				console.log('我说话了')
+			}
+		</script>
+		<script>
+			var aa = {a:1,b:2}
+			var {a} = aa
+			var {b} = aa
+			console.log({b})
+		</script>
+  </body>
+</html>
