@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>2_受控组件</title>
+    <script src="../16.4.react.development.js"></script>
+    <script src="../16.4.react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test"></div>
+    <script type="text/babel"> 
+			//受控组件和非受控组件之间选择，最好还是选受控组件
+
+			//创建组件
+			class Login extends React.Component{
+				//初始化状态
+				state = {
+					username: '', // 用户名
+					password:''  //密码
+				}
+
+				//保存用户名到状态中
+				saveUsername = (event) => {
+					this.setState({username:event.target})
+				}
+
+				//保存密码到状态中
+				savePassword = (event) => {
+					this.setState({password:event.target.value})
+				}
+
+				// 表单提交的回调
+				handleSubmit = (event) => {
+					event.preventDefault() //阻止表单提交
+					const {username,password} = this.state   //这样即存即用，是非受控组件
+					alert(`你输入的用户名是:${username.value},你输入的密码是:${password}`)
+				}
+
+
+				render() {
+					return(
+						<form onSubmit={this.handleSubmit}>
+							用户名：<input onChange={this.saveUsername} type="text" name="username"/>
+							密码：<input onChange={this.savePassword} type="password" name="password"/>
+							<button>登录</button>
+						</form>
+					)
+				}
+			}
+			// 渲染组件
+			ReactDOM.render(<Login/>,document.getElementById('test'))
+		</script>
+  </body>
+</html>

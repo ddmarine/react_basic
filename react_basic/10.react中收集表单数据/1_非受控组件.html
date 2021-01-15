@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>1_非受控组件</title>
+    <script src="../16.4.react.development.js"></script>
+    <script src="../16.4.react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test"></div>
+    <script type="text/babel"> 
+			//创建组件
+			class Login extends React.Component{
+				handleSubmit = (event) => {
+					event.preventDefault() //阻止表单提交
+					const {username,password} = this   //这样即存即用，是非受控组件
+					alert(`你输入的用户名是:${username.value},你输入的密码是:${password.value}`)
+				}
+				render() {
+					return(
+						<form onSubmit={this.handleSubmit}>
+							用户名：<input ref={c => this.username = c} type="text" name="username"/>
+							密码：<input ref={c => this.password = c} type="password" name="password"/>
+							<button>登录</button>
+						</form>
+					)
+				}
+			}
+			// 渲染组件
+			ReactDOM.render(<Login/>,document.getElementById('test'))
+		</script>
+  </body>
+</html>
