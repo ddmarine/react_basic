@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>1_引出生命周期</title>
+    <script src="../16.4.react.development.js"></script>
+    <script src="../16.4.react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test"></div>
+		<script type="text/babel">
+			//创建组件
+			//生命周期回调函数 == 生命周期钩子函数 == 生命周期函数 == 生命周期钩子
+			class Life extends React.Component{
+
+				state = {opacity:.5}
+
+				death = ()=>{
+					//清楚定时器 写在componentWillUnmount里也行
+					//clearInterval(this.timer)
+					//卸载组件
+					ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+				}
+
+				//组件挂载完毕
+				componentDidMount(){
+					this.timer = setInterval(() => {
+						//获取原状态
+						let {opacity} = this.state
+						// 减少0.1
+						opacity -= 0.1
+						if(opacity <= 0) opacity = 1
+						//设置新的透明度
+						this.setState({opacity})
+						
+					}, 200);
+				}
+
+				//组件将要卸载
+				componentWillUnmount() {
+					// 清除定时器
+					clearInterval(this.timer)
+				}
+
+				//初始化渲染，状态更新之后
+				render() {
+					console.log('render')
+					return(
+
+						<div>
+							<h2 style={{opacity:this.state.opacity}}>React学不会怎么办?</h2>
+							<button onClick={this.death}>不活了</button>
+						</div>
+					)
+				}
+			}
+			// 渲染组件
+			ReactDOM.render(<Life/>,document.getElementById('test'))
+		</script>
+  </body>
+</html>
