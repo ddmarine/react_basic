@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>1_验证Diffing算法</title>
+    <script src="../17.0.1/react.development-v17.0.1.js"></script>
+    <script src="../17.0.1/react-dom.development-v17.0.1.js"></script>
+
+    <!-- Don't use this in production: -->
+		<script src="../6.15.babel.min.js"></script>
+		<script src="../15.6.0.prop-types.js"></script>
+ 
+  </head>
+  <body>
+		<div id="test"></div>
+		<div id="test2"></div>
+		<script type="text/babel">
+			class Time extends React.Component {
+				state = {date: new Date()}
+
+				componentDidMount () {
+					setInterval(() => {
+						this.setState(() => {
+							date: new Date()
+						})
+					}, 1000);
+				}
+
+				render() {
+					return(
+						<div>
+							<h1>hello</h1>
+							<input type="text" />
+							<span>
+								现在：{this.state.date.toTimeString()}
+								<input type="text" />
+							</span>
+						</div>
+					)
+				}
+			}
+			ReactDOM.render(<Time/>,document.getElementById('test'))
+		</script>
+  </body>
+</html>
